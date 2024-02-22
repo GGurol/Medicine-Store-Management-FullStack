@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Prescriptions</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h2>Prescriptions List</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date Prescribed</th>
+                    <th>Doctor</th>
+                    <th>Medicines</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prescription in prescriptions %}
+                    <tr>
+                        <td>{{ prescription.date_prescribed }}</td>
+                        <td>{{ prescription.doctor.name }}</td>
+                        <td>
+                            {% for medicine in prescription.medicines.all %}
+                                {{ medicine.name }},{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a href="{% url 'view_prescription_details' prescription.pk %}" class="btn btn-sm btn-info">View Details</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'home' %}" class="btn btn-outline-info">Back to Home</a>
+    </div>
+
+</body>
+</html>
